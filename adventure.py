@@ -14,8 +14,6 @@ def look(current_room,data):
     print()
     
 
-
-
 def parse_map(map_file):
     data = json.load(map_file)
     current_room = 0
@@ -23,25 +21,36 @@ def parse_map(map_file):
     current_room_data = data[current_room]
     while True:
         current_room_data = data[current_room]
-        direction = input("What would you like to do? ")
-        if 'go' in direction.lower().split(' ')[0]:
+        verb = input("What would you like to do? ")
+        if 'go' in verb.lower().split(' ')[0]:
             try:
-                if direction.lower().split(' ')[1] in current_room_data['exits']:
-                    print(f"You go {direction.lower().split(' ')[1].lower()}")
-                    current_room = current_room_data['exits'][direction.lower().split(' ')[1]]
+                if verb.lower().split(' ')[1] in current_room_data['exits']:
+                    print(f"You go {verb.lower().split(' ')[1].lower()}")
+                    current_room = current_room_data['exits'][verb.lower().split(' ')[1]]
                     print(current_room)
                     look(current_room,data)
                 else:
-                    print(f"There's no way to go {direction.lower().split(' ')[1].lower()}")
-                
+                    print(f"There's no way to go {verb.lower().split(' ')[1].lower()}")
             except:
                 print("Sorry you need to go somewhere")
+        
+        if 'look' in verb.lower():
+            try:
+                look(current_room,data)
+            except Exception as e:
+                print(e)
+
+
 
 def main():
     parser = argparse.ArgumentParser(description = 'Get the map file to start playing!')
-    parser.add_argument('map_file',nargs='?', type=argparse.FileType("r"), default=sys.stdin, help="File to read the map from")
+    parser.add_argument('map_file',nargs='?', type=argparse.FileType("r"), help="File to read the map from")
     args = parser.parse_args()
-    parse_map(args.map_file)
+    if args.map_file:
+        parse_map(args.map_file)
+    else:
+        print("Give a MAP!!")
+        sys.exit()
 
 if __name__=='__main__':
     main()
