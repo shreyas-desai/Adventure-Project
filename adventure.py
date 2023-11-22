@@ -19,7 +19,7 @@ def parse_map(map_file):
     while True:
         try:
             current_room_data = data[current_room]
-            verb = input("What would you like to do? ").lower()
+            verb = input("What would you like to do?").lower()
             if 'quit' in verb:
                 sys.exit("Goodbye!")
             if 'go' in verb.split(' ')[0]:
