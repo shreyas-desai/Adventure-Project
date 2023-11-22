@@ -43,7 +43,7 @@ def parse_map(map_file):
 
             if 'get' in verb:
                 try:
-                    item = " ".join(verb.strip().split(' ')[1:]).strip()
+                    item = " ".join(verb.strip().split(' ')[1:]).strip().lower()
                     assert item!=''
                     if 'items' in data[current_room].keys() and len(data[current_room]['items'])!=0 and item in data[current_room]['items']:
                         data[current_room]['items'].remove(item)
