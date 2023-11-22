@@ -42,23 +42,23 @@ def parse_map(map_file):
                     print(e)
 
             if 'get' in verb:
-                # try:
-                item = verb.split(' ')[1]
-                if 'items' in data[current_room].keys() and len(data[current_room]['items'])!=0 and item in data[current_room]['items']:
-                    data[current_room]['items'].remove(item)
-                    print(f'You pick up the {item}.')
-                    items.append(item)
-                else:
-                    print(f"There's no {item} anywhere.")
-                # except:
-                #     print("Sorry, you need to 'get' something.")
+                try:
+                    item = " ".join(verb.split(' ')[1:])
+                    if 'items' in data[current_room].keys() and len(data[current_room]['items'])!=0 and item in data[current_room]['items']:
+                        data[current_room]['items'].remove(item)
+                        print(f'You pick up the {item}.')
+                        items.append(item)
+                    else:
+                        print(f"There's no {item} anywhere.")
+                except:
+                    print("Sorry, you need to 'get' something.")
                         
             
             if 'inventory' in verb:
                 try:
                     assert len(items)!=0
                     print("Inventory:")
-                    for item in items:
+                    for item in sorted(items):
                         print(f"  {item}")
                 except:
                     print("You're not carrying anything.")
