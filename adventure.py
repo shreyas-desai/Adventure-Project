@@ -19,12 +19,12 @@ def parse_map(map_file):
     while True:
         try:
             current_room_data = data[current_room]
-            verb = input("What would you like to do? ").lower()
+            verb = input("What would you like to do? ").lower().strip()
             if 'quit' in verb:
                 sys.exit("Goodbye!")
-            if 'go' in verb.split(' ')[0]:
+            if 'go' in verb.split()[0]:
                 try:
-                    exit = verb.split(' ')[1]
+                    exit = verb.split()[1]
                     assert exit != ''
                     if exit in current_room_data['exits']:
                         print(f"You go {exit}.\n")
@@ -43,7 +43,7 @@ def parse_map(map_file):
 
             if 'get' in verb:
                 try:
-                    item = " ".join(verb.strip().split(' ')[1:]).strip().lower()
+                    item = " ".join(verb.split()[1:]).strip().lower()
                     assert item!=''
                     if 'items' in data[current_room].keys() and len(data[current_room]['items'])!=0 and item in data[current_room]['items']:
                         data[current_room]['items'].remove(item)
