@@ -43,7 +43,7 @@ def parse_map(map_file):
 
             if 'get' in verb:
                 try:
-                    item = " ".join(verb.split(' ')[1:])
+                    item = " ".join(verb.split(' ')[1:]).strip()
                     if 'items' in data[current_room].keys() and len(data[current_room]['items'])!=0 and item in data[current_room]['items']:
                         data[current_room]['items'].remove(item)
                         print(f'You pick up the {item}.')
