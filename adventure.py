@@ -12,45 +12,68 @@ def look(current_room,data):
         print()
     print(f"Exits:",*data[current_room]['exits'].keys())
     print()
-    
+
 
 def parse_map(map_file):
     data = json.load(map_file)
     current_room = 0
     look(current_room,data)
     current_room_data = data[current_room]
+    items = []
     while True:
-        current_room_data = data[current_room]
-        verb = input("What would you like to do? ")
-        if 'go' in verb.lower().split(' ')[0]:
-            try:
-                if verb.lower().split(' ')[1] in current_room_data['exits']:
-                    print(f"You go {verb.lower().split(' ')[1].lower()}")
-                    current_room = current_room_data['exits'][verb.lower().split(' ')[1]]
-                    print(current_room)
+        try:
+            current_room_data = data[current_room]
+            verb = input("What would you like to do? ").lower()
+            if 'quit' in verb:
+                sys.exit("Goodbye!")
+            if 'go' in verb.split(' ')[0]:
+                try:
+                    exit = verb.split(' ')[1]
+                    if exit in current_room_data['exits']:
+                        print(f"You go {exit}")
+                        current_room = current_room_data['exits'][exit]
+                        look(current_room,data)
+                    else:
+                        print(f"There's no way to go {exit}")
+                except:
+                    print("Sorry you need to go somewhere")
+            
+            if 'look' in verb:
+                try:
                     look(current_room,data)
-                else:
-                    print(f"There's no way to go {verb.lower().split(' ')[1].lower()}")
-            except:
-                print("Sorry you need to go somewhere")
-        
-        if 'look' in verb.lower():
-            try:
-                look(current_room,data)
-            except Exception as e:
-                print(e)
+                except Exception as e:
+                    print(e)
+
+            if 'get' in verb:
+                try:
+                    item = verb.split(' ')[1]
+                    if 'items' in data[current_room].keys() and len(data[current_room]['items'])!=0 and item in data[current_room]['items']:
+                        print(f'You pick up the {item}.')
+                        items.append(item)
+                    else:
+                        print(f"There's no {item} anywhere.")
+                except:
+                    print("You need to 'get' something!")
+                        
+            
+            if 'inventory' in verb:
+                try:
+                    print("Inventory:")
+                    for item in items:
+                        print(f"\t{item}")
+                except:
+                    print("You're not carrying anything")
+        except EOFError:
+            print("Use 'quit' to exit.")
 
 
 
 def main():
     parser = argparse.ArgumentParser(description = 'Get the map file to start playing!')
-    parser.add_argument('map_file',nargs='?', type=argparse.FileType("r"), help="File to read the map from")
+    parser.add_argument('map_file',nargs=1, type=argparse.FileType("r"), help="File to read the map from")
     args = parser.parse_args()
-    if args.map_file:
-        parse_map(args.map_file)
-    else:
-        print("Give a MAP!!")
-        sys.exit()
+    parse_map(args.map_file[0])
+
 
 if __name__=='__main__':
     main()
