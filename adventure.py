@@ -24,7 +24,7 @@ def parse_map(map_file):
                 sys.exit("Goodbye!")
             if 'go' in verb.split()[0]:
                 try:
-                    exit = verb.split()[1]
+                    exit = ' '.join(verb.split()[1:])
                     assert exit != ''
                     if exit in current_room_data['exits']:
                         print(f"You go {exit}.\n")
