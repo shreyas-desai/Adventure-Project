@@ -1,88 +1,80 @@
 import argparse
 import json
 
-def look(current_room,data):
-    print(">",(data[current_room]['name']))
-    print()
-    print(data[current_room]['desc'])
-    print()
-    if 'items' in data[current_room].keys() and len(data[current_room]['items'])!=0:
-        print(f"Items: {', '.join(data[current_room]['items'])}")
-        print()
-    print(f"Exits: {' '.join(data[current_room]['exits'])}")
-    print()
+class Game:
+    def __init__(self, world_map):
+        self.world_map = world_map
+        self.current_room = 0
+        self.items = []
 
-def inventory(items):
-    for item in sorted(items):
-        print(f"  {item}")
+    def look(self):
+        current_room_data = self.world_map[self.current_room]
+        print(">", current_room_data['name'])
+        print()
+        print(current_room_data['desc'])
+        print()
+        if 'items' in current_room_data and len(current_room_data['items']) != 0:
+            print(f"Items: {', '.join(current_room_data['items'])}")
+            print()
+        print(f"Exits: {' '.join(current_room_data['exits'])}")
+        print()
+
+    def go(self, exit_name):
+        current_room_data = self.world_map[self.current_room]
+        if exit_name in current_room_data['exits']:
+            print(f"You go {exit_name}.")
+            print()
+            self.current_room = current_room_data['exits'][exit_name]
+            self.look()
+        elif exit_name=='':
+            print("Sorry, you need to 'go' somewhere.")
+        else:
+            print(f"There's no way to go {exit_name}.")
+
+    def get(self, item):
+        current_room_data = self.world_map[self.current_room]
+        if 'items' in current_room_data and len(current_room_data['items']) != 0 and item in current_room_data['items']:
+            current_room_data['items'].remove(item)
+            print(f'You pick up the {item}.')
+            self.items.append(item)
+        elif item=='':
+            print("Sorry, you need to 'get' something.")
+        else:
+            print(f"There's no {item} anywhere.")
+
+    def inventory(self):
+        if len(self.items) == 0:
+            print("You're not carrying anything.")
+            return
+        print("Inventory:")
+        for item in sorted(self.items):
+            print(f"  {item}")
 
 def parse_map(map_file):
     data = map_file
-    current_room = 0
-    look(current_room,data)
-    current_room_data = data[current_room]
-    items = []
+    game = Game(data)
+    game.look()
+
     while True:
         try:
-            current_room_data = data[current_room]
             verb = input("What would you like to do? ").lower().strip()
+
             if 'quit' in verb:
                 print("Goodbye!")
                 quit()
-            if 'go' in verb.split()[0]:
-                try:
-                    exit_name = ' '.join(verb.split()[1:])
-                    if exit_name == '':
-                        print("Sorry, you need to 'go' somewhere.")
-                        continue
-
-                    if exit_name in current_room_data['exits']:
-                        print(f"You go {exit_name}")
-                        print()
-                        current_room = current_room_data['exits'][exit_name]
-                        look(current_room,data)
-                    else:
-                        print(f"There's no way to go {exit_name}.")
-                except:
-                    print("Some error")
-            
-            if 'look' in verb:
-                try:
-                    look(current_room,data)
-                except Exception as e:
-                    print(e)
-
-            if 'get' in verb:
-                try:
-                    item = " ".join(verb.split()[1:])
-                    if item=='':
-                        print("Sorry, you need to 'get' something.")
-                        continue
-                    if 'items' in data[current_room].keys() and len(data[current_room]['items'])!=0 and item in data[current_room]['items']:
-                        data[current_room]['items'].remove(item)
-                        print(f'You pick up the {item}.')
-                        items.append(item)
-                    else:
-                        print(f"There's no {item} anywhere.")
-                except:
-                    print("Some Error")
-                        
-            if 'inventory' in verb:
-                try:
-                    if len(items)==0:
-                        print("You're not carrying anything.")
-                        continue
-                    print("Inventory:")
-                    inventory(items)
-                except:
-                    print("Some error")
+            elif 'go' in verb.split()[0]:
+                game.go(' '.join(verb.split()[1:]))
+            elif 'look' in verb:
+                game.look()
+            elif 'get' in verb:
+                game.get(' '.join(verb.split()[1:]))
+            elif 'inventory' in verb:
+                game.inventory()
         except EOFError:
             print("Use 'quit' to exit.")
 
-
-
 def main():
-    parser = argparse.ArgumentParser(description = 'Get the map file to start playing!')
+    parser = argparse.ArgumentParser(description='Get the map file to start playing!')
     parser.add_argument('map_file', help="File to read the map from")
     args = parser.parse_args()
 
@@ -90,6 +82,5 @@ def main():
         world_map = json.load(f)
     parse_map(world_map)
 
-
-if __name__=='__main__':
+if __name__ == '__main__':
     main()
