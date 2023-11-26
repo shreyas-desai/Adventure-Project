@@ -1,5 +1,4 @@
 import argparse
-import sys
 import json
 
 def look(current_room,data):
@@ -33,7 +32,10 @@ def parse_map(map_file):
             if 'go' in verb.split()[0]:
                 try:
                     exit_name = ' '.join(verb.split()[1:])
-                    assert exit_name != ''
+                    if exit_name == '':
+                        print("Sorry, you need to 'go' somewhere.")
+                        continue
+
                     if exit_name in current_room_data['exits']:
                         print(f"You go {exit_name}")
                         print()
@@ -42,7 +44,7 @@ def parse_map(map_file):
                     else:
                         print(f"There's no way to go {exit_name}.")
                 except:
-                    print("Sorry, you need to 'go' somewhere.")
+                    print("Some error")
             
             if 'look' in verb:
                 try:
@@ -53,7 +55,9 @@ def parse_map(map_file):
             if 'get' in verb:
                 try:
                     item = " ".join(verb.split()[1:])
-                    assert item!=''
+                    if item=='':
+                        print("Sorry, you need to 'get' something.")
+                        continue
                     if 'items' in data[current_room].keys() and len(data[current_room]['items'])!=0 and item in data[current_room]['items']:
                         data[current_room]['items'].remove(item)
                         print(f'You pick up the {item}.')
@@ -61,15 +65,17 @@ def parse_map(map_file):
                     else:
                         print(f"There's no {item} anywhere.")
                 except:
-                    print("Sorry, you need to 'get' something.")
+                    print("Some Error")
                         
             if 'inventory' in verb:
                 try:
-                    assert len(items)!=0
+                    if len(items)==0:
+                        print("You're not carrying anything.")
+                        continue
                     print("Inventory:")
                     inventory(items)
                 except:
-                    print("You're not carrying anything.")
+                    print("Some error")
         except EOFError:
             print("Use 'quit' to exit.")
 
