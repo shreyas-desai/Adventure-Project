@@ -8,11 +8,14 @@ def look(current_room,data):
     print(data[current_room]['desc'])
     print()
     if 'items' in data[current_room].keys() and len(data[current_room]['items'])!=0:
-        print(f"Items: {', '.join([x for x in data[current_room]['items']])}")
+        print(f"Items: {', '.join(data[current_room]['items'])}")
         print()
-    print(f"Exits: {' '.join([x for x in data[current_room]['exits']])}")
+    print(f"Exits: {' '.join(data[current_room]['exits'])}")
     print()
 
+def inventory(items):
+    for item in sorted(items):
+        print(f"  {item}")
 
 def parse_map(map_file):
     data = map_file
@@ -31,7 +34,8 @@ def parse_map(map_file):
                     exit_name = ' '.join(verb.split()[1:])
                     assert exit_name != ''
                     if exit_name in current_room_data['exits']:
-                        print(f"You go {exit_name}.\n")
+                        print(f"You go {exit_name}")
+                        print()
                         current_room = current_room_data['exits'][exit_name]
                         look(current_room,data)
                     else:
@@ -47,12 +51,10 @@ def parse_map(map_file):
 
             if 'get' in verb:
                 try:
-                    item = " ".join(verb.split()[1:]).strip().lower()
+                    item = " ".join(verb.split()[1:])
                     assert item!=''
                     if 'items' in data[current_room].keys() and len(data[current_room]['items'])!=0 and item in data[current_room]['items']:
                         data[current_room]['items'].remove(item)
-                        if len(data[current_room]['items']) == 0:
-                            del current_room_data['items']
                         print(f'You pick up the {item}.')
                         items.append(item)
                     else:
@@ -64,8 +66,7 @@ def parse_map(map_file):
                 try:
                     assert len(items)!=0
                     print("Inventory:")
-                    for item in sorted(items):
-                        print(f"  {item}")
+                    inventory(items)
                 except:
                     print("You're not carrying anything.")
         except EOFError:
