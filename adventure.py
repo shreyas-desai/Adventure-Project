@@ -28,7 +28,8 @@ def parse_map(map_file):
             current_room_data = data[current_room]
             verb = input("What would you like to do? ").lower().strip()
             if 'quit' in verb:
-                sys.exit("Goodbye!")
+                print("Goodbye!")
+                quit()
             if 'go' in verb.split()[0]:
                 try:
                     exit_name = ' '.join(verb.split()[1:])
