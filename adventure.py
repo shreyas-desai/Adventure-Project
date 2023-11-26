@@ -15,7 +15,7 @@ def look(current_room,data):
 
 
 def parse_map(map_file):
-    data = json.load(map_file)
+    data = map_file
     current_room = 0
     look(current_room,data)
     current_room_data = data[current_room]
@@ -75,10 +75,13 @@ def parse_map(map_file):
 
 def main():
     parser = argparse.ArgumentParser(description = 'Get the map file to start playing!')
-    parser.add_argument('map_file',nargs=1, type=argparse.FileType("r"), help="File to read the map from")
+    parser.add_argument('map_file', help="File to read the map from")
     args = parser.parse_args()
-    parse_map(args.map_file[0])
+
+    with open(args.map_file) as f:
+        world_map = json.load(f)
+    parse_map(world_map)
 
 
-# if __name__=='__main__':
-main()
+if __name__=='__main__':
+    main()
