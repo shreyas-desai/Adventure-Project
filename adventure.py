@@ -8,9 +8,9 @@ def look(current_room,data):
     print(data[current_room]['desc'])
     print()
     if 'items' in data[current_room].keys() and len(data[current_room]['items'])!=0:
-        print(f"Items: {', '.join(data[current_room]['items'])}")
+        print(f"Items: {', '.join([x for x in data[current_room]['items']])}")
         print()
-    print(f"Exits: {' '.join(data[current_room]['exits'].keys())}")
+    print(f"Exits: {' '.join([x for x in data[current_room]['exits']])}")
     print()
 
 
@@ -28,14 +28,14 @@ def parse_map(map_file):
                 sys.exit("Goodbye!")
             if 'go' in verb.split()[0]:
                 try:
-                    exit = ' '.join(verb.split()[1:])
-                    assert exit != ''
-                    if exit in current_room_data['exits']:
-                        print(f"You go {exit}.\n")
-                        current_room = current_room_data['exits'][exit]
+                    exit_name = ' '.join(verb.split()[1:])
+                    assert exit_name != ''
+                    if exit_name in current_room_data['exits']:
+                        print(f"You go {exit_name}.\n")
+                        current_room = current_room_data['exits'][exit_name]
                         look(current_room,data)
                     else:
-                        print(f"There's no way to go {exit}.")
+                        print(f"There's no way to go {exit_name}.")
                 except:
                     print("Sorry, you need to 'go' somewhere.")
             
