@@ -3,11 +3,15 @@ import sys
 import json
 
 def look(current_room,data):
-    print(f">{(data[current_room]['name'])}\n")
-    print(f"{data[current_room]['desc']}\n")
+    print(">",(data[current_room]['name']))
+    print()
+    print(data[current_room]['desc'])
+    print()
     if 'items' in data[current_room].keys() and len(data[current_room]['items'])!=0:
-        print(f"Items: {', '.join(data[current_room]['items'])}\n")
-    print(f"Exits: {' '.join(data[current_room]['exits'].keys())}\n")
+        print(f"Items: {', '.join(data[current_room]['items'])}")
+        print()
+    print(f"Exits: {' '.join(data[current_room]['exits'].keys())}")
+    print()
 
 
 def parse_map(map_file):
@@ -27,7 +31,8 @@ def parse_map(map_file):
                     exit = ' '.join(verb.split()[1:])
                     assert exit != ''
                     if exit in current_room_data['exits']:
-                        print(f"You go {exit}.\n")
+                        print(f"You go {exit}.")
+                        print()
                         current_room = current_room_data['exits'][exit]
                         look(current_room,data)
                     else:
