@@ -51,7 +51,7 @@ class Game:
             print(f"  {item}")
 
 def parse_map(map_file):
-    data = map_file
+    data = json.load(map_file)
     game = Game(data)
     game.look()
 
@@ -75,12 +75,12 @@ def parse_map(map_file):
 
 def main():
     parser = argparse.ArgumentParser(description='Get the map file to start playing!')
-    parser.add_argument('map_file', help="File to read the map from")
+    parser.add_argument('map_file',nargs=1,type=argparse.FileType('r'), help="File to read the map from")
     args = parser.parse_args()
 
-    with open(args.map_file) as f:
-        world_map = json.load(f)
-    parse_map(world_map)
+    # with open(args.map_file) as f:
+    #     world_map = json.load(f)
+    parse_map(args.map_file[0])
 
 if __name__ == '__main__':
     main()
