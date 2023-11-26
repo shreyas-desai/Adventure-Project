@@ -80,5 +80,5 @@ def main():
     parse_map(args.map_file[0])
 
 
-if __name__=='__main__':
-    main()
+# if __name__=='__main__':
+main()
