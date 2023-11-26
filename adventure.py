@@ -31,8 +31,7 @@ def parse_map(map_file):
                     exit = ' '.join(verb.split()[1:])
                     assert exit != ''
                     if exit in current_room_data['exits']:
-                        print(f"You go {exit}.")
-                        print()
+                        print(f"You go {exit}.\n")
                         current_room = current_room_data['exits'][exit]
                         look(current_room,data)
                     else:

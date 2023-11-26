@@ -28,4 +28,4 @@ if __name__ == '__main__':
             output_file = input_file.replace('.in', '.out')
             print('Testing {}...'.format(input_file))
             diff_files('tests/'+input_file, 'tests/'+output_file)
-            input()
+            # input()
