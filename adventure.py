@@ -42,6 +42,40 @@ class Game:
         else:
             print(f"There's no {item} anywhere.")
 
+    # Extension 1 - "drop {item}"
+    def drop(self,item):
+        current_room_data = self.world_map[self.current_room]
+        if item=='':
+            print("Sorry, you need to 'drop' something.")
+        elif item not in self.items:
+            print(f"You are not carrying {item}.")
+        else:
+            self.items.remove(item)
+            current_room_data['items'].append(item)
+            print(f"You dropped {item}.")
+    
+    #Extension 2 - "deny entry if door locked"
+    def check_door_locked(self,door):
+        current_room_data = self.world_map[self.current_room]
+        required = []
+        if 'requirements' in current_room_data:
+            if door in current_room_data['exits']:
+                next_room_data = self.world_map[current_room_data['exits'][door]]
+            else:
+                print(f"There's no way to go {door}.")
+                return False,required
+            current_requirements = next_room_data['requirements']
+        else:
+            return False,required
+
+        
+        for req in current_requirements:
+            if req not in self.items:
+                required.append(req)
+        return len(required)>0, required
+
+
+
     def inventory(self):
         if len(self.items) == 0:
             print("You're not carrying anything.")
@@ -63,11 +97,18 @@ def parse_map(map_file):
                 print("Goodbye!")
                 quit()
             elif 'go' in verb.split()[0]:
-                game.go(' '.join(verb.split()[1:]))
+                door = ' '.join(verb.split()[1:])
+                is_locked,items = game.check_door_locked(door)
+                if not is_locked:
+                    game.go(door)
+                else:
+                    print(f"You need {', '.join(items)} to pass through this door.")
             elif 'look' in verb:
                 game.look()
             elif 'get' in verb:
                 game.get(' '.join(verb.split()[1:]))
+            elif 'drop' in verb:
+                game.drop(' '.join(verb.split()[1:]))
             elif 'inventory' in verb:
                 game.inventory()
         except EOFError:
@@ -78,8 +119,6 @@ def main():
     parser.add_argument('map_file',nargs=1,type=argparse.FileType('r'), help="File to read the map from")
     args = parser.parse_args()
 
-    # with open(args.map_file) as f:
-    #     world_map = json.load(f)
     parse_map(args.map_file[0])
 
 if __name__ == '__main__':
