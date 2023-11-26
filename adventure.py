@@ -9,21 +9,21 @@ class Game:
 
     def look(self):
         current_room_data = self.world_map[self.current_room]
-        print(">", current_room_data['name'])
-        print()
-        print(current_room_data['desc'])
-        print()
+        print(">", current_room_data['name'],"\n")
+        # print()
+        print(current_room_data['desc'],"\n")
+        # print()
         if 'items' in current_room_data and len(current_room_data['items']) != 0:
-            print(f"Items: {', '.join(current_room_data['items'])}")
-            print()
-        print(f"Exits: {' '.join(current_room_data['exits'])}")
-        print()
+            print(f"Items: {', '.join(current_room_data['items'])}\n")
+            # print()
+        print(f"Exits: {' '.join(current_room_data['exits'])}\n")
+        # print()
 
     def go(self, exit_name):
         current_room_data = self.world_map[self.current_room]
         if exit_name in current_room_data['exits']:
-            print(f"You go {exit_name}.")
-            print()
+            print(f"You go {exit_name}.\n")
+            # print()
             self.current_room = current_room_data['exits'][exit_name]
             self.look()
         elif exit_name=='':
