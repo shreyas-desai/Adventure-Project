@@ -3,7 +3,7 @@ import sys
 import json
 
 def look(current_room,data):
-    print(f"> {(data[current_room]['name'])}\n")
+    print(f">{(data[current_room]['name'])}\n")
     print(f"{data[current_room]['desc']}\n")
     if 'items' in data[current_room].keys() and len(data[current_room]['items'])!=0:
         print(f"Items: {', '.join(data[current_room]['items'])}\n")
