@@ -1,0 +1,23 @@
+[
+ {"name": "A white room", "desc": "You are in a simple room with white walls.",
+  "exits": { "north": 1, "northwest": 2 },
+  "requirements":[]
+ }
+,
+ {"name": "A blue room", "desc": "This room is simple, too, but with blue walls.",
+  "exits": { "west": 0, "south": 3 },
+  "items":["green potion","blue potion","black potion"],
+  "requirements":["bandana","bellows"]
+ }
+,
+ {"name": "A green room", "desc": "You are in a simple room, with bright green walls.",
+  "exits": { "east": 1, "southeast": 0 },
+  "items": ["banana", "bandana", "bellows", "deck of cards"],
+  "requirements":[]
+ },
+ {"name": "A black room", "desc": "You are in a dark room, smells of mystery here.",
+  "exits": { "north": 0, "northeast": 2 },
+  "items": [],
+  "requirements":["green potion"]
+ }
+]

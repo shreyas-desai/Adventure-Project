@@ -8,6 +8,8 @@ class Game:
         self.items = []
 
     def look(self):
+        """look 
+            -- Look around the current room."""
         current_room_data = self.world_map[self.current_room]
         print(">", current_room_data['name'])
         print()
@@ -20,6 +22,8 @@ class Game:
         print()
 
     def go(self, exit_name):
+        """go ... 
+            -- Go in a particular direction. [east, west, south, north, northeast, northwest, southeast, southwest]"""
         current_room_data = self.world_map[self.current_room]
         if exit_name in current_room_data['exits']:
             print(f"You go {exit_name}.")
@@ -32,6 +36,8 @@ class Game:
             print(f"There's no way to go {exit_name}.")
 
     def get(self, item):
+        """get ... 
+            -- Get a specified item."""
         current_room_data = self.world_map[self.current_room]
         if 'items' in current_room_data and len(current_room_data['items']) != 0 and item in current_room_data['items']:
             current_room_data['items'].remove(item)
@@ -44,6 +50,8 @@ class Game:
 
     # Extension 1 - "drop {item}"
     def drop(self,item):
+        """drop 
+            -- Drop items from the inventory in current room"""
         current_room_data = self.world_map[self.current_room]
         if item=='':
             print("Sorry, you need to 'drop' something.")
@@ -54,17 +62,19 @@ class Game:
             current_room_data['items'].append(item)
             print(f"You dropped {item}.")
     
-    #Extension 2 - "deny entry if door locked"
-    def check_door_locked(self,door):
+    #Extension 2 - deny entry if required items are not in inventory.
+    def __check_door_locked__(self,door):
+        """__check_door_locked__ 
+            -- check if door is locked. If required items present in inventory, it is unlocked."""
         current_room_data = self.world_map[self.current_room]
         required = []
         if 'requirements' in current_room_data:
             if door in current_room_data['exits']:
                 next_room_data = self.world_map[current_room_data['exits'][door]]
+                current_requirements = next_room_data['requirements']
             else:
                 print(f"There's no way to go {door}.")
                 return False,required
-            current_requirements = next_room_data['requirements']
         else:
             return False,required
 
@@ -73,10 +83,23 @@ class Game:
             if req not in self.items:
                 required.append(req)
         return len(required)>0, required
-
-
+    
+    #Extension 3- "help"
+    def help(self):
+        """help
+            -- How to play?"""
+        function_names = [func for func in dir(self) if callable(getattr(self, func)) and not func.startswith("__")]
+        for function in function_names:
+            func = getattr(self, function)
+            if func and callable(func):
+                docstring = func.__doc__
+                if docstring:
+                    # print(f"{function} -- ")
+                    print(docstring)
 
     def inventory(self):
+        """inventory 
+            -- Show the inventory."""
         if len(self.items) == 0:
             print("You're not carrying anything.")
             return
@@ -98,7 +121,7 @@ def parse_map(map_file):
                 quit()
             elif 'go' in verb.split()[0]:
                 door = ' '.join(verb.split()[1:])
-                is_locked,items = game.check_door_locked(door)
+                is_locked,items = game.__check_door_locked__(door)
                 if not is_locked:
                     game.go(door)
                 else:
@@ -111,6 +134,8 @@ def parse_map(map_file):
                 game.drop(' '.join(verb.split()[1:]))
             elif 'inventory' in verb:
                 game.inventory()
+            elif 'help' in verb:
+                game.help()
         except EOFError:
             print("Use 'quit' to exit.")
 
