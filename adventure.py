@@ -6,7 +6,7 @@ class Game:
         self.world_map = world_map
         self.current_room = 0
         self.items = []
-
+        self.__verbs__ = ['drop','get','go','help','inventory','look']
     def look(self):
         """look 
             -- Look around the current room."""
@@ -32,8 +32,10 @@ class Game:
             self.look()
         elif exit_name=='':
             print("Sorry, you need to 'go' somewhere.")
+            return
         else:
             print(f"There's no way to go {exit_name}.")
+              
 
     def get(self, item):
         """get ... 
@@ -111,10 +113,17 @@ def parse_map(map_file):
     data = json.load(map_file)
     game = Game(data)
     game.look()
+    
 
     while True:
         try:
             verb = input("What would you like to do? ").lower().strip()
+            if verb=='':
+                print('You need to enter something!')
+                continue
+            if verb not in game.__verbs__:
+                print("No such command!")
+                continue
 
             if 'quit' in verb:
                 print("Goodbye!")
@@ -138,6 +147,7 @@ def parse_map(map_file):
                 game.help()
         except EOFError:
             print("Use 'quit' to exit.")
+
 
 def main():
     parser = argparse.ArgumentParser(description='Get the map file to start playing!')
