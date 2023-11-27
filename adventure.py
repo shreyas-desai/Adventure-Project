@@ -6,7 +6,7 @@ class Game:
         self.world_map = world_map
         self.current_room = 0
         self.items = []
-        self.__verbs__ = ['drop','get','go','help','inventory','look']
+        self.__verbs__ = ['drop','get','go','help','inventory','look','quit']
     def look(self):
         """look 
             -- Look around the current room."""
