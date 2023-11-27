@@ -118,12 +118,12 @@ def parse_map(map_file):
     while True:
         try:
             verb = input("What would you like to do? ").lower().strip()
-            # if verb=='':
-            #     print('You need to enter something!')
-            #     continue
-            # if verb not in game.__verbs__:
-            #     print("No such command!")
-            #     continue
+            if verb=='':
+                print('You need to enter something!')
+                continue
+            if verb not in game.__verbs__:
+                print("No such command!")
+                continue
 
             if 'quit' in verb:
                 print("Goodbye!")
