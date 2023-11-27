@@ -121,7 +121,7 @@ def parse_map(map_file):
             if verb=='':
                 print('You need to enter something!')
                 continue
-            if verb not in game.__verbs__:
+            if verb.split()[0] not in game.__verbs__:
                 print("No such command!")
                 continue
 
