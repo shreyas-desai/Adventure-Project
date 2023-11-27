@@ -75,7 +75,7 @@ class Game:
                 next_room_data = self.world_map[current_room_data['exits'][door]]
                 current_requirements = next_room_data['requirements']
             else:
-                print(f"There's no way to go {door}.")
+                # print(f"There's no way to go {door}.")
                 return False,required
         else:
             return False,required
