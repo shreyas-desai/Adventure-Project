@@ -32,7 +32,7 @@ class Game:
             self.look()
         elif exit_name=='':
             print("Sorry, you need to 'go' somewhere.")
-            return
+            # return
         else:
             print(f"There's no way to go {exit_name}.")
               
@@ -118,12 +118,12 @@ def parse_map(map_file):
     while True:
         try:
             verb = input("What would you like to do? ").lower().strip()
-            if verb=='':
-                print('You need to enter something!')
-                continue
-            if verb not in game.__verbs__:
-                print("No such command!")
-                continue
+            # if verb=='':
+            #     print('You need to enter something!')
+            #     continue
+            # if verb not in game.__verbs__:
+            #     print("No such command!")
+            #     continue
 
             if 'quit' in verb:
                 print("Goodbye!")
