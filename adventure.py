@@ -32,7 +32,7 @@ class Game:
             self.look()
         elif exit_name=='':
             print("Sorry, you need to 'go' somewhere.")
-            # return
+            return
         else:
             print(f"There's no way to go {exit_name}.")
               
