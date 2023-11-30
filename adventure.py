@@ -1,8 +1,6 @@
 import argparse
 import json
 
-
-
 class Game:
     def __init__(self, world_map):
         self.world_map = world_map
