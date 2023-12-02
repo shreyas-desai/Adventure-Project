@@ -237,7 +237,7 @@ The wall stands..
 ```
 
 #### 5. `Directions` verb
-In this extension, directions are working as verbs. Player can navigate by entering directions directly. If player enters only direction it was giving error as go verb wasn't added but after addition of this verb player can go to any direction by only typing directions.
+In this extension, directions are working as verbs. Player can navigate by entering directions directly. Previosuly,If player enters only direction it was giving error as "go" verb wasn't added but after addition of this verb player can go to any direction by simply typing directions.
 ##### Usage
 ```
 $  python .\adventure.py .\danger.map
