@@ -85,9 +85,10 @@ class Game:
 
     def __check_villain__(self, door):
         current_room_data = self.world_map[self.current_room]
-        if door in current_room_data['exits']:
-            if "villain" in self.world_map[current_room_data['exits'][door]]:
-                if self.world_map[current_room_data['exits'][door]]['villain'] == "True":
+        if door in current_room_data['exits']:        
+            if "villian" in self.world_map[current_room_data['exits'][door]]:             
+                if self.world_map[current_room_data['exits'][door]]['villian'] == "True":
+
                     return True
         else:
             return False
