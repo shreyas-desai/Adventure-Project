@@ -85,10 +85,15 @@ class Game:
 
     def __check_villain__(self, door):
         current_room_data = self.world_map[self.current_room]
-        if "villain" in self.world_map[current_room_data['exits'][door]]:
-            if self.world_map[current_room_data['exits'][door]]['villain'] == "True":
-                return True
-        return False
+        if door in current_room_data['exits']:
+            if "villain" in self.world_map[current_room_data['exits'][door]]:
+                if self.world_map[current_room_data['exits'][door]]['villain'] == "True":
+                    return True
+        # elif door=='':
+        #     print("Sorry, you need to 'go' somewhere.")
+        #     return
+        else:
+            return False
 
     def help(self):
         """help
@@ -111,19 +116,19 @@ class Game:
         for item in sorted(self.items):
             print(f"  {item}")
 
-    def input_directions(self, user_input_exit):
-        input_val = user_input_exit[0]
-        if input_val in self.__directions__:
-            print(f"You go {user_input_exit}.")
-            print()
-            self.go(input_val)
-            self.look()
-        elif input_val in self.abbreviation:
-            print(f"You go {user_input_exit}.")
-            print()
-            self.go(self.abbreviation[input_val])
-        else:
-            print(f"There's no way to go {input_val}.")
+    # def input_directions(self, user_input_exit):
+    #     input_val = user_input_exit[0]
+    #     if input_val in self.__directions__:
+    #         print(f"You go {user_input_exit}.")
+    #         print()
+    #         self.go(input_val)
+    #         self.look()
+    #     elif input_val in self.abbreviation:
+    #         print(f"You go {user_input_exit}.")
+    #         print()
+    #         self.go(self.abbreviation[input_val])
+    #     else:
+    #         print(f"There's no way to go {input_val}.")
 
 def parse_map(map_file):
     data = json.load(map_file)
