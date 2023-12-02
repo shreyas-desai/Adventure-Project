@@ -7,8 +7,6 @@ class Game:
         self.current_room = 0
         self.items = []
         self.__verbs__ = ['drop','get','go','help','inventory','look','quit']
-        self.__directions__ = ['east','west','north','south','northeast','northwest','southeast','southwest']
-        self.abbreviation = {'e': 'east','w': 'west','n': 'north','s': 'south','ne': 'northeast','nw': 'northwest','se': 'southeast','sw': 'southwest'}
     def look(self):
         """look 
             -- Look around the current room."""
@@ -26,10 +24,6 @@ class Game:
     def go(self, exit_name):
         """go ... 
             -- Go in a particular direction. [east, west, south, north, northeast, northwest, southeast, southwest]"""
-        
-        # if "villian" in self.current_room_data.keys():
-            # print("Danger hahahahhahaa")
-        # print(self.current_room_data)
         current_room_data = self.world_map[self.current_room]
         if exit_name in current_room_data['exits']:
             print(f"You go {exit_name}.")
@@ -92,15 +86,6 @@ class Game:
                 required.append(req)
         return len(required)>0, required
     
-
-    def __check_villian__(self,door):
-        current_room_data = self.world_map[self.current_room]
-        # print(current_room_data['exits'][door])
-        if "villian" in self.world_map[current_room_data['exits'][door]]:
-            if self.world_map[current_room_data['exits'][door]]['villian']=="True":
-                return True
-        return False
-
     #Extension 3- "help"
     def help(self):
         """help
@@ -128,13 +113,12 @@ def parse_map(map_file):
     data = json.load(map_file)
     game = Game(data)
     game.look()
-    
 
     while True:
         try:
             verb = input("What would you like to do? ").lower().strip()
             if verb=='':
-                print('You need to enter something!')
+                print("You need to enter something! Type 'help' for more.")
                 continue
             if verb.split()[0] not in game.__verbs__:
                 print("No such command!")
@@ -145,23 +129,11 @@ def parse_map(map_file):
                 quit()
             elif 'go' in verb.split()[0]:
                 door = ' '.join(verb.split()[1:])
-                if game.__check_villian__(door):
-                    decision = input(f"Danger!\nDo you wish to continue?(Y/n)")
-                    if 'y' in decision.lower():
-                        is_locked,items = game.__check_door_locked__(door)
-                        if not is_locked:
-                            game.go(door)
-                        else:
-                            print(f"The Night King killed you..\nYou died!")
-                            quit()
-                    else:
-                        continue
+                is_locked,items = game.__check_door_locked__(door)
+                if not is_locked:
+                    game.go(door)
                 else:
-                    is_locked,items = game.__check_door_locked__(door)
-                    if not is_locked:
-                        game.go(door)
-                    else:
-                        print(f"You need {', '.join(items)} to pass through this door.")
+                    print(f"You need {', '.join(items)} to pass through this door.")
             elif 'look' in verb:
                 game.look()
             elif 'get' in verb:

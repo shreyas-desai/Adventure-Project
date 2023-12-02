@@ -1,0 +1,24 @@
+[
+ {"name": "A white room", "desc": "You are in a simple room with white walls.",
+  "exits": { "north": 3, "northwest": 2 , "south" :1  },
+  "requirements":[]
+ }
+,
+ {"name": "A golden room", "desc": "Somebody cooked here !!",
+  "exits": { "west": 2, "north": 3 },
+  "items":["frog potion","bat potion","chameleon potion"],
+  "requirements":[]
+ }
+,
+ {"name": "An iron room", "desc": "The Nights are getting longer, winter is coming......",
+  "exits": { "north": 3},
+  "items": ["longclaw", "needle", "oathkeeper", "heartsbane"],
+  "requirements":[]
+ },
+ {"name": "The NIGHTFORT", "desc": "The Long Night...",
+  "exits": { "north": 0, "northeast": 2 },
+  "items": [],
+  "villian" : "True",
+  "requirements":["Longclaw"]
+ }
+]
