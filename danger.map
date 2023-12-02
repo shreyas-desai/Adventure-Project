@@ -19,6 +19,6 @@
   "exits": { "north": 0, "northeast": 2 },
   "items": [],
   "villian" : "True",
-  "requirements":["Longclaw"]
+  "requirements":["longclaw"]
  }
 ]
