@@ -12,13 +12,13 @@
 ,
  {"name": "An iron room", "desc": "The Nights are getting longer, winter is coming......",
   "exits": { "north": 3},
-  "items": ["Longclaw", "Needle", "Oathkeeper", "Heartsbane"],
+  "items": ["longclaw", "needle", "oathkeeper", "heartsbane"],
   "requirements":[]
  },
  {"name": "The NIGHTFORT", "desc": "The Long Night...",
   "exits": { "north": 0, "northeast": 2 },
   "items": [],
   "villian" : "True",
-  "requirements":["Longclaw"]
+  "requirements":["longclaw"]
  }
 ]

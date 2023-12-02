@@ -160,3 +160,104 @@ What would you like to do?
 ```
 
 2 new maps, `ambig2.map` and `loop2.map` have beed added to check the working of the extensions.
+
+#### 4. `Villian` 
+
+This functionality does not include a verb. It is new feature in game for adventure purpose.</br> 
+
+The logic behind this extension is as follows:</br>
+a. In the map danger, villina 'Night King' has been added to the map. </br>
+b. The Villian is located in the north, when user attempt to go to north , danger message will displayed and ask user if they want to continue. </br>
+c. User can get the potion from golden room and weapon from the iron room.</br> 
+d.To defeat the villian play required a weapon longclaw, if player enter without a longclaw, villian will kill the player and game will end.</br>
+d.If player has the longclaw weapon they can enter the room and killed the villian after entering the room north.
+
+##### Usage
+```
+$ python3 adventure.py danger.map
+> A white room
+
+You are in a simple room with white walls.
+
+Exits: north northwest south
+
+What would you like to do? north
+Danger!
+Do you wish to continue?(Y/n)y
+The Night King killed you..
+You died!
+
+
+python .\adventure.py .\danger.map
+> A white room
+
+You are in a simple room with white walls.
+
+Exits: north northwest south
+
+What would you like to do? south
+You go south.
+
+> A golden room
+
+Somebody cooked here !!
+
+Items: frog potion, bat potion, chameleon potion
+
+Exits: west north
+
+What would you like to do? get frog potion
+You pick up the frog potion.
+What would you like to do? go west
+You go west.
+
+> An iron room
+
+The Nights are getting longer, winter is coming......
+
+Items: longclaw, needle, oathkeeper, heartsbane
+
+Exits: north
+
+What would you like to do? get longclaw
+You pick up the longclaw.
+What would you like to do? go north
+Danger!
+Do you wish to continue?(Y/n)y
+You go north.
+
+> The NIGHTFORT
+
+The Long Night...
+
+Exits: north northeast
+
+You killed the Night King.
+The wall stands..
+```
+
+#### 5. `Directions` verb
+In this extension, directions are working as verbs. Player can navigate by entering directions directly. If player enters only direction it was giving error as go verb wasn't added but after addition of this verb player can go to any direction by only typing directions.
+##### Usage
+```
+$  python .\adventure.py .\danger.map
+> A white room
+
+You are in a simple room with white walls.
+
+Exits: north northwest south
+
+What would you like to do? northwest
+You go northwest.
+
+> An iron room
+
+The Nights are getting longer, winter is coming......
+
+Items: longclaw, needle, oathkeeper, heartsbane
+
+Exits: north
+
+What would you like to do? north
+Danger! 
+```
