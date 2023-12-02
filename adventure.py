@@ -6,9 +6,8 @@ class Game:
         self.world_map = world_map
         self.current_room = 0
         self.items = []
-        self.__verbs__ = ['drop','get','go','help','inventory','look','quit']
-        self.__directions__ = ['east','west','north','south','northeast','northwest','southeast','southwest']
-        self.__abbreviations__ = {'e': 'east','w': 'west','n': 'north','s': 'south','ne': 'northeast','nw': 'northwest','se': 'southeast','sw': 'southwest'}
+        self.__verbs__ = ['drop', 'get', 'go', 'help', 'inventory', 'look', 'quit']
+        self.__directions__ = ['east', 'west', 'north', 'south', 'northeast', 'northwest', 'southeast', 'southwest']
     
     def look(self):
         """look 
@@ -27,22 +26,17 @@ class Game:
     def go(self, exit_name):
         """go ... 
             -- Go in a particular direction. [east, west, south, north, northeast, northwest, southeast, southwest]"""
-        
-        # if "villian" in self.current_room_data.keys():
-            # print("Danger hahahahhahaa")
-        # print(self.current_room_data)
         current_room_data = self.world_map[self.current_room]
         if exit_name in current_room_data['exits']:
             print(f"You go {exit_name}.")
             print()
             self.current_room = current_room_data['exits'][exit_name]
             self.look()
-        elif exit_name=='':
+        elif exit_name == '':
             print("Sorry, you need to 'go' somewhere.")
             return
         else:
             print(f"There's no way to go {exit_name}.")
-              
 
     def get(self, item):
         """get ... 
@@ -52,17 +46,16 @@ class Game:
             current_room_data['items'].remove(item)
             print(f'You pick up the {item}.')
             self.items.append(item)
-        elif item=='':
+        elif item == '':
             print("Sorry, you need to 'get' something.")
         else:
             print(f"There's no {item} anywhere.")
 
-    # Extension 1 - "drop {item}"
-    def drop(self,item):
+    def drop(self, item):
         """drop 
-            -- Drop items from the inventory in current room"""
+            -- Drop items from the inventory in the current room"""
         current_room_data = self.world_map[self.current_room]
-        if item=='':
+        if item == '':
             print("Sorry, you need to 'drop' something.")
         elif item not in self.items:
             print(f"You are not carrying {item}.")
@@ -70,11 +63,10 @@ class Game:
             self.items.remove(item)
             current_room_data['items'].append(item)
             print(f"You dropped {item}.")
-    
-    #Extension 2 - deny entry if required items are not in inventory.
-    def __check_door_locked__(self,door):
+
+    def __check_door_locked__(self, door):
         """__check_door_locked__ 
-            -- check if door is locked. If required items present in inventory, it is unlocked."""
+            -- check if the door is locked. If required items present in inventory, it is unlocked."""
         current_room_data = self.world_map[self.current_room]
         required = []
         if 'requirements' in current_room_data:
@@ -82,29 +74,22 @@ class Game:
                 next_room_data = self.world_map[current_room_data['exits'][door]]
                 current_requirements = next_room_data['requirements']
             else:
-                # print(f"There's no way to go {door}.")
-                return False,required
+                return False, required
         else:
-            return False,required
+            return False, required
 
-        
         for req in current_requirements:
             if req not in self.items:
                 required.append(req)
-        return len(required)>0, required
-    
+        return len(required) > 0, required
 
-    def __check_villian__(self,door):
+    def __check_villain__(self, door):
         current_room_data = self.world_map[self.current_room]
-        # print("villian" in self.world_map[current_room_data['exits'][door]])
-        if "villian" in self.world_map[current_room_data['exits'][door]]:
-            if self.world_map[current_room_data['exits'][door]]['villian']=="True":
+        if "villain" in self.world_map[current_room_data['exits'][door]]:
+            if self.world_map[current_room_data['exits'][door]]['villain'] == "True":
                 return True
         return False
 
-
-    
-    #Extension 3- "help"
     def help(self):
         """help
             -- How to play?"""
@@ -114,7 +99,6 @@ class Game:
             if func and callable(func):
                 docstring = func.__doc__
                 if docstring:
-                    # print(f"{function} -- ")
                     print(docstring)
 
     def inventory(self):
@@ -128,46 +112,34 @@ class Game:
             print(f"  {item}")
 
     def input_directions(self, user_input_exit):
+        input_val = user_input_exit[0]
+        if input_val in self.__directions__:
+            print(f"You go {user_input_exit}.")
+            print()
+            self.go(input_val)
+            self.look()
+        elif input_val in self.abbreviation:
+            print(f"You go {user_input_exit}.")
+            print()
+            self.go(self.abbreviation[input_val])
+        else:
+            print(f"There's no way to go {input_val}.")
 
-        input = user_input_exit[0]
-        if (input in self.__directions__):
-            print(f"You go {user_input_exit}.")
-            print()
-            self.go(input)
-            self.look()    
-        elif (input in self.abbreviation) :    
-            print(f"You go {user_input_exit}.")
-            print()
-            self.go (self.abbreviation[input])
-            
-        else :
-            print(f"There's no way to go {input}.")
-        
 def parse_map(map_file):
     data = json.load(map_file)
     game = Game(data)
     game.look()
-    
 
     while True:
         try:
             verb = input("What would you like to do? ").lower().strip()
-            if verb=='':
+            if verb == '':
                 print('You need to enter something!')
                 continue
             
             if verb.split()[0] not in game.__verbs__ and verb.split()[0] not in game.__directions__:
                 print("No such command!")
                 continue
-            # if verb.split()[0] in game.__abbreviations__ :
-            #     game.input_directions(verb)
-            # elif verb.split()[0] in game.__directions__:
-            #     print(f"you want to go to")
-            #     game.input_directions(verb)
-
-            # else :
-            #     print(" No such command !") 
-            #     # continue
 
             if 'quit' in verb:
                 print("Goodbye!")
@@ -177,12 +149,10 @@ def parse_map(map_file):
                     door = verb.split()[0]
                 else:
                     door = ' '.join(verb.split()[1:])
-                # print(door)
-                if game.__check_villian__(door):
+                if game.__check_villain__(door):
                     decision = input(f"Danger!\nDo you wish to continue?(Y/n)")
                     if 'y' in decision.lower():
-                        is_locked,items = game.__check_door_locked__(door)
-                        # print(is_locked,items)
+                        is_locked, items = game.__check_door_locked__(door)
                         if not is_locked:
                             game.go(door)
                             print(f"You killed the Night King.\nThe wall stands..")
@@ -193,7 +163,7 @@ def parse_map(map_file):
                     else:
                         continue
                 else:
-                    is_locked,items = game.__check_door_locked__(door)
+                    is_locked, items = game.__check_door_locked__(door)
                     if not is_locked:
                         game.go(door)
                     else:
@@ -211,10 +181,9 @@ def parse_map(map_file):
         except EOFError:
             print("Use 'quit' to exit.")
 
-
 def main():
     parser = argparse.ArgumentParser(description='Get the map file to start playing!')
-    parser.add_argument('map_file',nargs=1,type=argparse.FileType('r'), help="File to read the map from")
+    parser.add_argument('map_file', nargs=1, type=argparse.FileType('r'), help="File to read the map from")
     args = parser.parse_args()
 
     parse_map(args.map_file[0])
