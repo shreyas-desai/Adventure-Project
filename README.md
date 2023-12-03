@@ -162,16 +162,16 @@ What would you like to do?
 
 2 new maps, `ambig2.map` and `loop2.map` have beed added to check the working of the extensions.
 
-#### 4. `Winning and Losing conditions` 
+#### 4. Winning and Losing conditions
 
 This functionality does not include a verb. It is new feature in the game for adventurous purposes.</br> 
 
 The logic behind this extension is as follows:</br>
-a. In the map danger, the villain 'Night King' has been added to the map. </br>
+a. In `danger.map`, the villain 'Night King' has been added. </br>
 b. The villain is located in the north, We need to kill the villain to win the game. When the user attempt to go to north , danger message will displayed and ask user if they want to continue. </br>
 c. The user can get the items from golden room and the iron room.</br> 
-d. To defeat the villain play required a weapon, if player enter without weapon, villain will kill the player and game will end.</br>
-e. If player has the weapon they can enter the room and killed the villain after entering the room north, win the game.
+d. To defeat the villain we require a weapon, if the player enters the room without a weapon, villain will kill the player and game will end.</br>
+e. If player has the weapon they can enter the room and kill the villain. The game ends after entering the room in the north and the player wins.
 
 ##### Usage
 ```
@@ -237,8 +237,8 @@ You killed the Night King.
 The wall stands..
 ```
 
-#### 5. `Directions` verb
-In this extension, players can now directly use directions as verbs to navigate. Previously, entering only a direction resulted in an error since the "go" verb wasn't added. However, with this extension, players can move in any direction by simply typing the direction itself.
+#### 5. Directions as  verbs
+In this extension, players can now directly use directions as verbs to navigate. Previously, entering only a direction resulted in an error since the "go" verb wasn't added. However, with this extension, players can move in any direction by simply typing the direction itself. 
 ##### Usage
 ```
 $  python .\adventure.py .\danger.map
