@@ -54,7 +54,7 @@ What would you like to do?
 ```
 
 #### 2. `drop` verb
-This verb drops the items present in the inventory. If there is no *`item`* inside inventory, it shows an error message.
+This verb drops the items present in the inventory. If there is no *`item`* inside the inventory, it shows an error message.
 ##### Usage
 ```
 $ python3 adventure.py ambig2.map
@@ -96,7 +96,7 @@ What would you like to do?
 This functionality does not include a verb for usage (per se). It is more like a kind of state the game is in.</br> 
 
 The logic behind this extension is as follows:</br>
-a. Lets say there is a direction in which you want to go, you use the `go` verb to do that. </br>
+a. Let's say there is a direction in which you want to go, you use the `go` verb to do that. </br>
 b. If the door, which you want to enter requires some items and you dont have those items in your inventory, you cannot enter the room.</br>
 c. So you roam around the world to find those items, `get` them in your inventory, and then go back to the room which you want to enter.</br>
 d. Now, if you have the correct set of item(s), you can enter the room as usual.
@@ -162,16 +162,16 @@ What would you like to do?
 
 2 new maps, `ambig2.map` and `loop2.map` have beed added to check the working of the extensions.
 
-#### 4. `Winnign and Losing conditions` 
+#### 4. `Winning and Losing conditions` 
 
-This functionality does not include a verb. It is new feature in game for adventurous purposes.</br> 
+This functionality does not include a verb. It is new feature in the game for adventurous purposes.</br> 
 
 The logic behind this extension is as follows:</br>
 a. In the map danger, the villain 'Night King' has been added to the map. </br>
-b. The Villain is located in the north,We need to kill the villain to win the game. When the user attempt to go to north , danger message will displayed and ask user if they want to continue. </br>
+b. The villain is located in the north, We need to kill the villain to win the game. When the user attempt to go to north , danger message will displayed and ask user if they want to continue. </br>
 c. The user can get the items from golden room and the iron room.</br> 
-d.To defeat the villain play required a weapon, if player enter without weapon, villain will kill the player and game will end.</br>
-d.If player has the weapon they can enter the room and killed the villain after entering the room north, win the game.
+d. To defeat the villain play required a weapon, if player enter without weapon, villain will kill the player and game will end.</br>
+e. If player has the weapon they can enter the room and killed the villain after entering the room north, win the game.
 
 ##### Usage
 ```
