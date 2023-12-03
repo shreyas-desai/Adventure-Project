@@ -1,5 +1,6 @@
 # Adventure
 ## Shreyas Desai - sdesai33@stevens.edu
+## Vaibhavi Shah - vshah6@stevens.edu
 
 ### Github Repo: [Project 2 - Adventure](https://github.com/shreyas-desai/Adventure-Project)
 
@@ -161,16 +162,16 @@ What would you like to do?
 
 2 new maps, `ambig2.map` and `loop2.map` have beed added to check the working of the extensions.
 
-#### 4. `Villian` 
+#### 4. `Winnign and Losing conditions` 
 
-This functionality does not include a verb. It is new feature in game for adventure purpose.</br> 
+This functionality does not include a verb. It is new feature in game for adventurous purposes.</br> 
 
 The logic behind this extension is as follows:</br>
-a. In the map danger, villina 'Night King' has been added to the map. </br>
-b. The Villian is located in the north, when user attempt to go to north , danger message will displayed and ask user if they want to continue. </br>
-c. User can get the potion from golden room and weapon from the iron room.</br> 
-d.To defeat the villian play required a weapon longclaw, if player enter without a longclaw, villian will kill the player and game will end.</br>
-d.If player has the longclaw weapon they can enter the room and killed the villian after entering the room north.
+a. In the map danger, the villain 'Night King' has been added to the map. </br>
+b. The Villain is located in the north,We need to kill the villain to win the game. When the user attempt to go to north , danger message will displayed and ask user if they want to continue. </br>
+c. The user can get the items from golden room and the iron room.</br> 
+d.To defeat the villain play required a weapon, if player enter without weapon, villain will kill the player and game will end.</br>
+d.If player has the weapon they can enter the room and killed the villain after entering the room north, win the game.
 
 ##### Usage
 ```
@@ -237,7 +238,7 @@ The wall stands..
 ```
 
 #### 5. `Directions` verb
-In this extension, directions are working as verbs. Player can navigate by entering directions directly. Previosuly,If player enters only direction it was giving error as "go" verb wasn't added but after addition of this verb player can go to any direction by simply typing directions.
+In this extension, players can now directly use directions as verbs to navigate. Previously, entering only a direction resulted in an error since the "go" verb wasn't added. However, with this extension, players can move in any direction by simply typing the direction itself.
 ##### Usage
 ```
 $  python .\adventure.py .\danger.map
